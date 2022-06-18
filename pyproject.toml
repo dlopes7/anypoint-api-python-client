@@ -1,15 +1,14 @@
-[tool.poetry]
-name = "anypoint"
-version = "0.1.0"
-description = ""
-authors = ["dlopes7 <davidribeirolopes@gmail.com>"]
-
-[tool.poetry.dependencies]
-python = "^3.8"
-
-[tool.poetry.dev-dependencies]
-pytest = "^5.2"
-
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["flit"]
+build-backend = "flit.buildapi"
+
+[project]
+name = "anypoint"
+authors = [{ name = "dlopes7", email = "davidribeirolopes@gmail.com" }]
+license = { file = "LICENSE" }
+classifiers = ["License :: OSI Approved :: MIT License"]
+dynamic = ["version", "description"]
+
+
+[project.urls]
+Home = "https://github.com/dlopes7/anypoint-api-python-client"
