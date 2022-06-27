@@ -8,8 +8,8 @@ if TYPE_CHECKING:
 
 class Organization:
     def __init__(self, raw_json, client: "Anypoint"):
-        self.id: str = raw_json["id"]
-        self.name: str = raw_json["name"]
+        self.id: str = raw_json.get("id")
+        self.name: str = raw_json.get("name")
 
         self._data = raw_json
         self._api_client = client

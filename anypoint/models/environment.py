@@ -9,11 +9,11 @@ if TYPE_CHECKING:
 
 class Environment:
     def __init__(self, raw_json, client: "Anypoint"):
-        self.id: str = raw_json["id"]
-        self.name: str = raw_json["name"]
-        self.is_production: bool = raw_json["isProduction"]
-        self.type: str = raw_json["type"]
-        self.client_id: str = raw_json["clientId"]
+        self.id: str = raw_json.get("id")
+        self.name: str = raw_json.get("name")
+        self.is_production: bool = raw_json.get("isProduction")
+        self.type: str = raw_json.get("type")
+        self.client_id: str = raw_json.get("clientId")
         self.organization_id = raw_json.get("organizationId")
         self.applications: List[Application] = []
 

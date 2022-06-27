@@ -10,18 +10,18 @@ if TYPE_CHECKING:
 
 class Application:
     def __init__(self, raw_json, client: "Anypoint"):
-        self.domain: str = raw_json["domain"]
-        self.full_domain: str = raw_json["fullDomain"]
-        self.id: str = raw_json["id"]
-        self.mule_version: str = raw_json["muleVersion"]
-        self.region: str = raw_json["region"]
-        self.status: str = raw_json["status"]
-        self.filename: str = raw_json["filename"]
-        self.deployment_group_id: str = raw_json["deploymentGroupId"]
+        self.domain: str = raw_json.get("domain")
+        self.full_domain: str = raw_json.get("fullDomain")
+        self.id: str = raw_json.get("id")
+        self.mule_version: str = raw_json.get("muleVersion")
+        self.region: str = raw_json.get("region")
+        self.status: str = raw_json.get("status")
+        self.filename: str = raw_json.get("filename")
+        self.deployment_group_id: str = raw_json.get("deploymentGroupId")
 
-        self.num_workers: int = raw_json["workers"]
-        self.remaining_workers: int = raw_json["remainingWorkerCount"]
-        self.environment_id: str = raw_json["environment_id"]
+        self.num_workers: int = raw_json.get("workers")
+        self.remaining_workers: int = raw_json.get("remainingWorkerCount")
+        self.environment_id: str = raw_json.get("environment_id")
         self.statistics = None
         self.worker_statistics: List[WorkerStatistic] = []
         self.workers: List[Worker] = []
@@ -30,7 +30,7 @@ class Application:
         self._api_client = client
 
         try:
-            self.last_update_time: datetime = datetime.utcfromtimestamp(raw_json["lastUpdateTime"] / 1000)
+            self.last_update_time: datetime = datetime.utcfromtimestamp(raw_json.get("lastUpdateTime") / 1000)
         except Exception:
             self.last_update_time: datetime = datetime.now()
 

@@ -6,11 +6,11 @@ if TYPE_CHECKING:
 
 class Worker:
     def __init__(self, raw_json, client: "Anypoint"):
-        self.id = raw_json["id"]
-        self.host = raw_json["host"]
-        self.port = raw_json["port"]
-        self.status = raw_json["status"]
-        self.deployed_region = raw_json["deployedRegion"]
+        self.id = raw_json.get("id")
+        self.host = raw_json.get("host")
+        self.port = raw_json.get("port")
+        self.status = raw_json.get("status")
+        self.deployed_region = raw_json.get("deployedRegion")
 
         self._data = raw_json
         self._api_client = client
@@ -21,7 +21,7 @@ class Worker:
 
 class WorkerStatistic:
     def __init__(self, raw_json, client: "Anypoint"):
-        self.id = raw_json["id"]
+        self.id = raw_json.get("id")
         self.disk_read_bytes = self.get_latest_value("diskReadBytes")
         self.disk_write_bytes = self.get_latest_value("diskWriteBytes")
         self.network_in = self.get_latest_value("networkIn")
@@ -29,8 +29,8 @@ class WorkerStatistic:
         self.memory_total_used = self.get_latest_value("memoryTotalUsed")
         self.memory_percent_used = self.get_latest_value("memoryPercentageUsed")
         self.cpu = self.get_latest_value("cpu")
-        self.memory_total_max = raw_json["statistics"]["memoryTotalMax"] if "memoryTotalMax" in raw_json[
-            "statistics"] else -1
+        self.memory_total_max = raw_json.get("statistics", {})["memoryTotalMax"] if "memoryTotalMax" in raw_json.get(
+            "statistics", {}) else -1
 
         self._data = raw_json
         self._api_client = client
