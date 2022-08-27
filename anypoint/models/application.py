@@ -5,11 +5,11 @@ from anypoint.models.statistics import DashboardStatistics, Statistic
 from anypoint.models.worker import Worker, WorkerStatistic
 
 if TYPE_CHECKING:
-    from anypoint import Anypoint
+    from anypoint.api.application import ApplicationApi
 
 
 class Application:
-    def __init__(self, raw_json, client: "Anypoint"):
+    def __init__(self, raw_json, client: "ApplicationApi"):
         self.domain: str = raw_json.get("domain")
         self.full_domain: str = raw_json.get("fullDomain")
         self.id: str = raw_json.get("id")
@@ -44,7 +44,7 @@ class Application:
         return self._api_client.get_application_statistics(self.environment_id, self.domain, date_from, date_to)
 
     def get_dashboard_statistics(self, date_from: datetime, date_to: datetime) -> DashboardStatistics:
-        return self._api_client.get_application_dashboard_statistics(self.environment_id,
-                                                                     self.domain,
-                                                                     date_from,
-                                                                     date_to)
+        return self._api_client.get_dashboard_statistics(self.environment_id,
+                                                         self.domain,
+                                                         date_from,
+                                                         date_to)

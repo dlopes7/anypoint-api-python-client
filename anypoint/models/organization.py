@@ -3,11 +3,11 @@ from typing import List, TYPE_CHECKING
 from anypoint.models.environment import Environment
 
 if TYPE_CHECKING:
-    from anypoint import Anypoint
+    from anypoint.api.organization import OrganizationApi
 
 
 class Organization:
-    def __init__(self, raw_json, client: "Anypoint"):
+    def __init__(self, raw_json, client: "OrganizationApi"):
         self.id: str = raw_json.get("id")
         self.name: str = raw_json.get("name")
 

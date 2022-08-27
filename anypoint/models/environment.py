@@ -1,5 +1,4 @@
-from datetime import datetime
-from typing import List, TYPE_CHECKING
+from typing import Generator, List, TYPE_CHECKING
 
 from anypoint.models.application import Application
 
@@ -18,30 +17,10 @@ class Environment:
         self.applications: List[Application] = []
 
         self._data = raw_json
-        self._api_client = client
+        self._client = client
 
     def __repr__(self):
         return f"Environment({self.name}, {self.id})"
 
-    def get_monitoring_applications(self, date_from: datetime, date_to: datetime, app_ids: List[str],
-                                    detailed: bool = True):
-        return self._api_client.monitoring_api.get_applications(self.organization_id,
-                                                                self.id,
-                                                                date_from,
-                                                                date_to,
-                                                                app_ids,
-                                                                detailed)
-
-    def get_monitoring_application(self, date_from: datetime, date_to: datetime, app_id: str, detailed: bool = True):
-        return self._api_client.monitoring_api.get_application(self.organization_id,
-                                                               self.id,
-                                                               date_from,
-                                                               date_to,
-                                                               app_id,
-                                                               detailed)
-
-    def get_applications(self):
-        return self._api_client.get_applications(self.id)
-
-    def get_apis(self):
-        return self._api_client.get_apis(self.organization_id, self.id)
+    def get_applications(self) -> Generator[Application, None, None]:
+        return self._client.applications.get_applications(self.id)

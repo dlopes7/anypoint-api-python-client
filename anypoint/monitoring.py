@@ -7,12 +7,11 @@ from anypoint.utils import date_to_str
 if TYPE_CHECKING:
     from anypoint import Anypoint
 
-_default_log = logging.getLogger(__name__)
-
 
 class MonitoringApi:
-    def __init__(self, api_client: "Anypoint"):
+    def __init__(self, api_client: "Anypoint", log: logging.Logger):
         self._api_client = api_client
+        self._log = log
 
     def get_applications(self, organization_id: str,
                          environment_id: str,
@@ -29,7 +28,7 @@ class MonitoringApi:
         body = {
             "ids": app_ids
         }
-        return self._api_client._request(path, method="POST", parameters=params, body=body)
+        return self._api_client.request(path, method="POST", parameters=params, body=body)
 
     def get_application(self, organization_id: str,
                         environment_id: str,
@@ -44,4 +43,4 @@ class MonitoringApi:
             "to": date_to_str(date_to),
             "detailed": detailed
         }
-        return self._api_client._request(path, parameters=params)
+        return self._api_client.request(path, parameters=params)
