@@ -49,7 +49,6 @@ class OAuth2(Authentication):
             "client_secret": self.client_secret,
             "grant_type": "client_credentials"
         }
-        print(body)
         headers = {
             "Content-Type": "application/json"
         }

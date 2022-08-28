@@ -1,5 +1,5 @@
 import logging
-from typing import Generator, Optional, Union
+from typing import Optional, Union
 
 import anypoint.vendor.mureq as requests
 from anypoint.api.application import ApplicationApi
@@ -37,12 +37,6 @@ class Anypoint:
         # TODO - Parse the response
         path = "/accounts/api/me"
         return self.request(path)
-
-    def get_apis(self, organization_id: str, environment_id: str) -> Generator[dict, None, None]:
-        path = f"/apimanager/api/v1/organizations/{organization_id}/environments/{environment_id}/apis"
-        data = self.request(path)
-        for api in data.get("assets", []):
-            yield api
 
     def request(self, path: str,
                 method: str = "GET",

@@ -16,10 +16,11 @@ class OrganizationApi:
     def get_organization(self, org_id: Optional[str] = None) -> Organization:
         if org_id is None:
             data = self._client.me()
+            data = data.get("user", {}).get("organization", {})
         else:
             path = f"/accounts/api/organizations/{org_id}"
             data = self._client.request(path)
-        return Organization(data.get("user", {}).get("organization", {}), self)
+        return Organization(data, self)
 
     def get_environments(self, organization_id: str) -> Generator[Environment, None, None]:
         path = f"/accounts/api/organizations/{organization_id}/environments"
