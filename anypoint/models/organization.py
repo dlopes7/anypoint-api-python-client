@@ -19,9 +19,6 @@ class Organization:
         self.is_root: bool = raw_json.get("isRoot")
         self.is_master: bool = raw_json.get("isMaster")
         self.mfa_required: str = raw_json.get("mfaRequired")
-        self.environments: List[Environment] = []
-        for env in raw_json.get("environments", []):
-            self.environments.append(Environment(env, client._client))
         self.entitlements: "Entitlements" = Entitlements(raw_json.get("entitlements", {}))
 
         self._data = raw_json

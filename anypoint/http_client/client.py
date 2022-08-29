@@ -8,8 +8,9 @@ REQUEST_TIMEOUT = 60
 
 class HttpClient:
 
-    def __init__(self, log: logging.Logger):
+    def __init__(self, log: logging.Logger, proxies: Optional[dict] = None):
         self._log = log
+        self._proxies = proxies
 
     def request(self, url: str,
                 method: str = "GET",
@@ -25,6 +26,7 @@ class HttpClient:
                                  params=parameters,
                                  headers=headers,
                                  timeout=REQUEST_TIMEOUT,
+                                 proxies=self._proxies,
                                  verify=False)
             self._log.debug(f"Received response {method} {url} {parameters if parameters else ''}: {r}")
             if r.status_code >= 400:

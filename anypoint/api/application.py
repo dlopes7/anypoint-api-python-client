@@ -54,3 +54,8 @@ class ApplicationApi:
         for app in data:
             app["environment_id"] = environment_id
             yield Application(app, self)
+
+    def get_insights(self, environment_id: str, app_domain: str):
+        path = f"/api/v2/applications/{app_domain}/insight"
+        headers = {"X-ANYPNT-ENV-ID": environment_id}
+        return self._client.request(path, headers=headers)

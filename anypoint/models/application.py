@@ -20,11 +20,15 @@ class Application:
         self.deployment_group_id: str = raw_json.get("deploymentGroupId")
 
         self.num_workers: int = raw_json.get("workers")
-        self.remaining_workers: int = raw_json.get("remainingWorkerCount")
+        self.remaining_workers: int = raw_json.get("remainingWorkerCount", 0)
         self.environment_id: str = raw_json.get("environment_id")
         self.statistics = None
         self.worker_statistics: List[WorkerStatistic] = []
         self.workers: List[Worker] = []
+        self.worker_type = raw_json.get("workerType")
+        self.worker_count = raw_json.get("workers", 0)
+        self.file_name = raw_json.get("filename")
+        self.href = raw_json.get("href")
 
         self._data = raw_json
         self._api_client = client
@@ -48,3 +52,6 @@ class Application:
                                                          self.domain,
                                                          date_from,
                                                          date_to)
+
+    def get_insights(self):
+        return self._api_client.get_insights(self.environment_id, self.domain)

@@ -18,8 +18,8 @@ def main():
             for event in statistics.events:
                 print(event.timestamp, event.value)
             for worker in statistics.workers:
-                for metric in worker.statistics:
-                    print(metric.metric_id, metric.statistics)
+                for metric in worker.metrics:
+                    print(metric.metric_id, metric.metrics)
 
 
 if __name__ == '__main__':

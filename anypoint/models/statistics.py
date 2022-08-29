@@ -27,7 +27,7 @@ class DashboardStatistics:
         return f"DashboardStatistics({self._data})"
 
 
-class WorkerStatistic:
+class WorkerMetric:
     def __init__(self, metric_id: str, datapoints: Union[dict, float, int]):
         self.metric_id: str = metric_id
         self.statistics: List[Statistic] = []
@@ -41,6 +41,6 @@ class WorkerStatistic:
 class Worker:
     def __init__(self, data: dict):
         self.id: str = data["id"]
-        self.statistics: List[WorkerStatistic] = []
+        self.metrics: List[WorkerMetric] = []
         for metric_id, datapoints in data.get("statistics", {}).items():
-            self.statistics.append(WorkerStatistic(metric_id, datapoints))
+            self.metrics.append(WorkerMetric(metric_id, datapoints))
