@@ -1,7 +1,10 @@
 import logging
 from typing import Optional, Union
 
-import anypoint.vendor.mureq as requests
+import requests
+
+# Disable urllib warnings
+requests.packages.urllib3.disable_warnings()
 
 REQUEST_TIMEOUT = 60
 

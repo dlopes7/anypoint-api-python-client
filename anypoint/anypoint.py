@@ -1,7 +1,8 @@
 import logging
 from typing import Optional, Union
 
-import anypoint.vendor.mureq as requests
+import requests
+
 from anypoint.api.application import ApplicationApi
 from anypoint.api.environment import EnvironmentApi
 from anypoint.api.organization import OrganizationApi
