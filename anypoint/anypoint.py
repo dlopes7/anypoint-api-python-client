@@ -5,10 +5,10 @@ import requests
 
 from anypoint.api.application import ApplicationApi
 from anypoint.api.environment import EnvironmentApi
+from anypoint.api.monitoring import MonitoringApi
 from anypoint.api.organization import OrganizationApi
 from anypoint.authentication import Authentication
 from anypoint.http_client.client import HttpClient
-from anypoint.monitoring import MonitoringApi
 
 _default_log = logging.getLogger(__name__)
 
