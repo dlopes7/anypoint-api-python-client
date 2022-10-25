@@ -3,6 +3,7 @@ from typing import Optional, Union
 
 import requests
 
+from anypoint.api.api_manager import ApiManagerApi
 from anypoint.api.application import ApplicationApi
 from anypoint.api.environment import EnvironmentApi
 from anypoint.api.monitoring import MonitoringApi
@@ -26,6 +27,7 @@ class Anypoint:
         self.applications = ApplicationApi(self, log)
         self.environments = EnvironmentApi(self, log)
         self.monitoring = MonitoringApi(self, log)
+        self.api_manager = ApiManagerApi(self, log)
 
         self._log = log
         self._access_token: Optional[str] = None
