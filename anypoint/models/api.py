@@ -1,9 +1,23 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import List, TYPE_CHECKING
 
 if TYPE_CHECKING:
     from anypoint.api.api_manager import ApiManagerApi
+
+
+class Asset:
+    def __init__(self, raw_json, client: ApiManagerApi):
+        self.id = raw_json.get("id")
+        self.org_id = raw_json.get("organizationId")
+        self.name = raw_json.get("name")
+        self.exchange_asset_name = raw_json.get("exchangeAssetName")
+        self.group_id = raw_json.get("groupId")
+        self.asset_id = raw_json.get("assetId")
+        self.apis: List[Api] = [Api(raw_data, client) for raw_data in raw_json.get("apis", [])]
+
+    def __repr__(self):
+        return f"Asset({self.id}, {self.asset_id})"
 
 
 class Api:

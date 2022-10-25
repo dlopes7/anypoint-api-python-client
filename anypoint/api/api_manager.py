@@ -4,7 +4,7 @@ import logging
 import typing
 from typing import List
 
-from anypoint.models.api import Api
+from anypoint.models.api import Asset
 
 if typing.TYPE_CHECKING:
     from anypoint import Anypoint
@@ -15,8 +15,10 @@ class ApiManagerApi:
         self._client = client
         self._log = log
 
-    def get_apis(self, organization_id: str, environment_id: str) -> List[Api]:
+    def get_apis(self, organization_id: str, environment_id: str) -> List[Asset]:
         path = f"/apimanager/api/v1/organizations/{organization_id}/environments/{environment_id}/apis"
         assets = self._client.request(path).get("assets", [])
-        for asset in assets:
-            yield from [Api(raw_data, self) for raw_data in asset.get("apis", [])]
+        with open("assets.json", "w") as f:
+            import json
+            json.dump(assets, f, indent=2)
+        return [Asset(asset, self) for asset in assets]
