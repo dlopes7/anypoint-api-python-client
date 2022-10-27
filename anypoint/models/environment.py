@@ -28,3 +28,6 @@ class Environment:
 
     def get_apis(self) -> List[Asset]:
         return self._client.api_manager.get_apis(self.organization_id, self.id)
+
+    def get_organization(self):
+        return self._client.organizations.get_environment_organization(self.id)

@@ -24,6 +24,23 @@ class Organization:
         self._data = raw_json
         self._api_client = client
 
+        usage = raw_json.get("usage", {})
+        self.standard_connectors = usage.get("standardConnectors", 0)
+        self.premium_connectors = usage.get("premiumConnectors", 0)
+        self.production_applications = usage.get("productionApplications", 0)
+        self.sandbox_applications = usage.get("sandboxApplications", 0)
+        self.design_applications = usage.get("designApplications", 0)
+        self.production_workers = usage.get("productionWorkers", 0)
+        self.sandbox_workers = usage.get("sandboxWorkers", 0)
+        self.design_workers = usage.get("designWorkers", 0)
+        self.static_ips = usage.get("staticIps", 0)
+        self.vpcs = usage.get("vpcs", 0)
+        self.vpns = usage.get("vpns", 0)
+        self.network_connections = usage.get("networkConnections", 0)
+        self.load_balancers = usage.get("loadbalancers", 0)
+        self.load_balancer_workers = usage.get("loadbalancerWorkers", 0)
+        self.deployment_groups = usage.get("deploymentGroups", 0)
+
     def get_environments(self) -> List[Environment]:
         return list(self._api_client.get_environments(self.id))
 

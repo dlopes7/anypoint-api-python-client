@@ -28,3 +28,9 @@ class OrganizationApi:
         for env in data.get("data", []):
             env["organization_id"] = organization_id
             yield Environment(env, self._client)
+
+    def get_environment_organization(self, environment_id: str) -> Organization:
+        path = f"/cloudhub/api/organization"
+        headers = {"X-ANYPNT-ENV-ID": environment_id}
+        data = self._client.request(path, headers=headers)
+        return Organization(data, self)
