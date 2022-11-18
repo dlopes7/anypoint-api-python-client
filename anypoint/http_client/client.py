@@ -18,10 +18,11 @@ class CustomRetry(Retry):
 
 class HttpClient:
 
-    def __init__(self, log: logging.Logger, proxies: Optional[dict] = None):
+    def __init__(self, log: logging.Logger, proxies: Optional[dict] = None, http_timeout: int = REQUEST_TIMEOUT):
         self._log = log
         self._proxies = proxies
         self._session = requests.Session()
+        self.http_timeout = http_timeout
         self._session.mount('https://', HTTPAdapter(max_retries=CustomRetry(
             total=3,
             backoff_factor=0.5,
@@ -43,7 +44,7 @@ class HttpClient:
                                       json=body,
                                       params=parameters,
                                       headers=headers,
-                                      timeout=REQUEST_TIMEOUT,
+                                      timeout=self.http_timeout,
                                       proxies=self._proxies,
                                       verify=False)
             self._log.debug(f"Received response {method} {url} {parameters if parameters else ''}: {r}")

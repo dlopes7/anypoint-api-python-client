@@ -53,5 +53,8 @@ class Application:
                                                          date_from,
                                                          date_to)
 
+    def get_status(self):
+        return self._api_client.get_application_status(self.environment_id, self.domain)
+
     def get_insights(self):
         return self._api_client.get_insights(self.environment_id, self.domain)

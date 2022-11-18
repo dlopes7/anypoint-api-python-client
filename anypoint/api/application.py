@@ -59,3 +59,9 @@ class ApplicationApi:
         path = f"/api/v2/applications/{app_domain}/insight"
         headers = {"X-ANYPNT-ENV-ID": environment_id}
         return self._client.request(path, headers=headers)
+
+    def get_application_status(self, environment_id: str, app_domain: str):
+        path = f"/cloudhub/api/applications/{app_domain}/status"
+        headers = {"X-ANYPNT-ENV-ID": environment_id}
+        response = self._client.request(path, headers=headers, return_json=False)
+        return response.text

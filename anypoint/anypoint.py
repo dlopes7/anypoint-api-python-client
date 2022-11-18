@@ -19,7 +19,8 @@ class Anypoint:
     def __init__(self, authentication: Authentication,
                  base_url: str = "https://anypoint.mulesoft.com",
                  log: logging.Logger = _default_log,
-                 proxies: Optional[dict] = None):
+                 proxies: Optional[dict] = None,
+                 http_timeout: int = 30):
         self._base_url = base_url
         self._authentication = authentication
 
@@ -31,7 +32,7 @@ class Anypoint:
 
         self._log = log
         self._access_token: Optional[str] = None
-        self._http_client = HttpClient(log, proxies)
+        self._http_client = HttpClient(log, proxies, http_timeout=http_timeout)
         self._authentication.http_client = self._http_client
 
     def login(self):
