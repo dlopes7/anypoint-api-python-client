@@ -2,6 +2,7 @@ from typing import Generator, List, TYPE_CHECKING
 
 from anypoint.models.api import Asset
 from anypoint.models.application import Application
+from anypoint.models.destination import Destination, Queue
 
 if TYPE_CHECKING:
     from anypoint import Anypoint
@@ -31,3 +32,12 @@ class Environment:
 
     def get_organization(self):
         return self._client.organizations.get_environment_organization(self.id)
+
+    def get_mq_queues(self, region_id: str, destinations: List[str] = None):
+        return self._client.mq.get_queues(self.organization_id, self.id, region_id, destinations)
+
+    def get_mq_queue(self, region_id: str, destination_id: str) -> Queue:
+        return self._client.mq.get_queue(self.organization_id, self.id, region_id, destination_id)
+
+    def get_mq_destinations(self, region_id: str) -> List[Destination]:
+        return self._client.mq.get_destinations(self.organization_id, self.id, region_id)

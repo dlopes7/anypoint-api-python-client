@@ -51,6 +51,7 @@ class HttpClient:
             if r.status_code >= 400:
                 error_message = f"Received a bad response: {method} {url}: {r}: {r.content}"
                 raise Exception(error_message)
+            # self._log.debug(f"Response: {r.json()}")
             return r.json() if return_json else r
         except Exception as e:
             self._log.exception(f"Could not make request {method} {url}: {repr(e)}")
