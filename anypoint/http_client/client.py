@@ -27,7 +27,7 @@ class HttpClient:
             total=3,
             backoff_factor=0.5,
             status_forcelist=[429, 500, 502, 503, 504],
-            method_whitelist=["TRACE", "PUT", "DELETE", "OPTIONS", "HEAD", "GET", "POST"],
+            allowed_methods=["TRACE", "PUT", "DELETE", "OPTIONS", "HEAD", "GET", "POST"],
             raise_on_status=False,
         )))
 
