@@ -1,7 +1,7 @@
 from typing import Generator, List, TYPE_CHECKING
 
 from anypoint.models.api import Asset
-from anypoint.models.application import Application
+from anypoint.models.application import Application, ApplicationV2
 from anypoint.models.destination import Destination, Queue
 
 if TYPE_CHECKING:
@@ -27,7 +27,7 @@ class Environment:
     def get_applications(self) -> Generator[Application, None, None]:
         return self._client.applications.get_applications(self.id)
 
-    def get_applications_v2(self) -> Generator[Application, None, None]:
+    def get_applications_v2(self) -> Generator[ApplicationV2, None, None]:
         return self._client.applications.get_applications_v2(self.organization_id, self.id)
 
     def get_apis(self) -> List[Asset]:
