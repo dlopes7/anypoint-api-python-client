@@ -27,6 +27,9 @@ class Environment:
     def get_applications(self) -> Generator[Application, None, None]:
         return self._client.applications.get_applications(self.id)
 
+    def get_applications_v2(self) -> Generator[Application, None, None]:
+        return self._client.applications.get_applications_v2(self.organization_id, self.id)
+
     def get_apis(self) -> List[Asset]:
         return self._client.api_manager.get_apis(self.organization_id, self.id)
 

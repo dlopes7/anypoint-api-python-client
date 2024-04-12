@@ -1,9 +1,10 @@
+import json
 import logging
 from datetime import datetime
 from typing import Generator, TYPE_CHECKING
 
 from anypoint import utils
-from anypoint.models.application import Application
+from anypoint.models.application import Application, ApplicationV2
 from anypoint.models.statistics import DashboardStatistics, Statistic
 
 if TYPE_CHECKING:
@@ -49,11 +50,21 @@ class ApplicationApi:
 
     def get_applications(self, environment_id: str) -> Generator[Application, None, None]:
         path = f"/cloudhub/api/applications"
-        headers = {"X-ANYPNT-ENV-ID": environment_id}
+        headers = {
+            "X-ANYPNT-ENV-ID": environment_id
+        }
         data = self._client.request(path, headers=headers)
         for app in data:
             app["environment_id"] = environment_id
             yield Application(app, self)
+
+    def get_applications_v2(self, org_id: str, environment_id: str) -> Generator[ApplicationV2, None, None]:
+        path = f"/amc/application-manager/api/v2/organizations/{org_id}/environments/{environment_id}/deployments"
+        data = self._client.request(path)
+        for app in data["items"]:
+            app["environment_id"] = environment_id
+            app["organization_id"] = org_id
+            yield ApplicationV2(app, self)
 
     def get_insights(self, environment_id: str, app_domain: str):
         path = f"/api/v2/applications/{app_domain}/insight"

@@ -58,3 +58,21 @@ class Application:
 
     def get_insights(self):
         return self._api_client.get_insights(self.environment_id, self.domain)
+
+
+class ApplicationV2:
+
+    def __init__(self, raw_json, client: "ApplicationApi"):
+        self.id: str = raw_json.get("id")
+        self.name: str = raw_json.get("name")
+        self.creation_date: datetime = datetime.utcfromtimestamp(raw_json.get("creationDate") / 1000)
+        self.last_modified_date: datetime = datetime.utcfromtimestamp(raw_json.get("lastModifiedDate") / 1000)
+        self.status: str = raw_json.get("status")
+        self.application_status: str = raw_json.get("application", {}).get("status")
+        self.current_runtime_version: str = raw_json.get("currentRuntimeVersion")
+        self.last_successful_runtime_version: str = raw_json.get("lastSuccessfulRuntimeVersion")
+
+        self._data = raw_json
+
+    def __repr__(self):
+        return f"ApplicationV2({self.name, self.status, self.application_status})"
