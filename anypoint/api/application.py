@@ -4,7 +4,7 @@ from datetime import datetime
 from typing import Generator, TYPE_CHECKING
 
 from anypoint import utils
-from anypoint.models.application import Application, ApplicationV2
+from anypoint.models.application import Application, ApplicationV2, ApplicationV2Details
 from anypoint.models.statistics import DashboardStatistics, Statistic
 
 if TYPE_CHECKING:
@@ -65,6 +65,14 @@ class ApplicationApi:
             app["environment_id"] = environment_id
             app["organization_id"] = org_id
             yield ApplicationV2(app, self)
+
+    def get_application_v2(self, org_id: str, environment_id: str, deployment_id: str) -> ApplicationV2Details:
+        path = f"/amc/application-manager/api/v2/organizations/{org_id}/environments/{environment_id}/deployments/{deployment_id}"
+        data = self._client.request(path)
+        data["environment_id"] = environment_id
+        data["organization_id"] = org_id
+        return ApplicationV2Details(data, self)
+
 
     def get_insights(self, environment_id: str, app_domain: str):
         path = f"/api/v2/applications/{app_domain}/insight"

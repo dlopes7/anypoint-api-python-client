@@ -76,3 +76,31 @@ class ApplicationV2:
 
     def __repr__(self):
         return f"ApplicationV2({self.name, self.status, self.application_status})"
+
+
+class ApplicationV2Details:
+
+        def __init__(self, raw_json, client: "ApplicationApi"):
+            self.environment_id = raw_json.get("environment_id")
+            self.organization_id = raw_json.get("organization_id")
+
+            self.id: str = raw_json.get("id")
+            self.name: str = raw_json.get("name")
+            self.domain = self.name
+            self.full_domain: str = self.name
+
+            self.public_url = raw_json.get("target", {}).get("deploymentSettings", {}).get("http", {}).get("inbound", {}).get("publicUrl")
+            self.internal_url = raw_json.get("target", {}).get("deploymentSettings", {}).get("http", {}).get("inbound", {}).get("internalUrl")
+
+            self.mule_version = raw_json.get("target", {}).get("deploymentSettings", {}).get("runtimeVersion")
+            self.region = raw_json.get("target", {}).get("provider")
+            self.file_name = raw_json.get("application", {}).get("ref", {}).get("artifactId")
+            self.worker_count = raw_json.get("target", {}).get("replicas")
+            self.remaining_workers = len(raw_json.get("replicas") or [])
+            self.worker_type = raw_json.get("target", {}).get("instanceType")
+            self.status = raw_json.get("application", {}).get("status")
+
+            self.href = f"https://anypoint.mulesoft.com/monitoring/#/builtin/{self.environment_id}/mc/{self.id}/overview"
+
+        def __repr__(self):
+            return f"ApplicationV2Details({self.name, self.status})"
