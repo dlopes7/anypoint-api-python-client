@@ -44,6 +44,9 @@ class Organization:
     def get_environments(self) -> List[Environment]:
         return list(self._api_client.get_environments(self.id))
 
+    def get_private_spaces(self):
+        return self._api_client.get_private_spaces(self.id)
+
 
 class Entitlements:
     def __init__(self, raw_json: dict):

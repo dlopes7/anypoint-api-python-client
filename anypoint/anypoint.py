@@ -50,7 +50,7 @@ class Anypoint:
                 body: Optional[dict] = None,
                 headers: Optional[dict] = None,
                 parameters: Optional[dict] = None,
-                return_json = True) -> Union[dict, requests.Response]:
+                return_json=True) -> Union[dict, requests.Response]:
         url = f"{self._base_url}{path}"
         if not self._access_token and not url.endswith("/accounts/login"):
             self.login()

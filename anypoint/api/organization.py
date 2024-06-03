@@ -1,8 +1,9 @@
 import logging
-from typing import Generator, Optional, TYPE_CHECKING
+from typing import Generator, Optional, TYPE_CHECKING, List
 
 from anypoint.models.environment import Environment
 from anypoint.models.organization import Organization
+from anypoint.models.private_space import PrivateSpace, Connection
 
 if TYPE_CHECKING:
     from anypoint import Anypoint
@@ -34,3 +35,14 @@ class OrganizationApi:
         headers = {"X-ANYPNT-ENV-ID": environment_id}
         data = self._client.request(path, headers=headers)
         return Organization(data, self)
+
+    def get_private_spaces(self, organization_id: str) -> List[PrivateSpace]:
+        path = f"/runtimefabric/api/organizations/{organization_id}/privatespaces"
+        data = self._client.request(path)
+        content = data.get("content", [])
+        return [PrivateSpace(x, self._client) for x in content]
+
+    def get_private_space_connections(self, organization_id: str, private_space_id: str) -> List[Connection]:
+        path = f"/runtimefabric/api/organizations/{organization_id}/privatespaces/{private_space_id}/connections"
+        data = self._client.request(path)
+        return [Connection(x) for x in data]
