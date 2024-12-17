@@ -36,9 +36,10 @@ class HttpClient:
                 body: Optional[dict] = None,
                 headers: Optional[dict] = None,
                 parameters: Optional[dict] = None,
-                return_json = True
+                return_json=True
                 ) -> Union[dict, requests.Response]:
         try:
+            self._log.debug(f"Making request {method} {url} {parameters if parameters else ''} with timeout {self.http_timeout}")
             r = self._session.request(method,
                                       url,
                                       json=body,

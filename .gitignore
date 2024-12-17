@@ -3,3 +3,6 @@ dist/
 .idea/
 *.json
 __pycache__/
+test.py
+venv/
+find_scopes.py
