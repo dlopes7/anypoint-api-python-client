@@ -45,7 +45,7 @@ class HttpClient:
                                       json=body,
                                       params=parameters,
                                       headers=headers,
-                                      timeout=self.http_timeout,
+                                      timeout=(self.http_timeout, self.http_timeout),
                                       proxies=self._proxies,
                                       verify=False)
             self._log.debug(f"Received response {method} {url} {parameters if parameters else ''}: {r}")
